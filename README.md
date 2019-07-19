@@ -1,6 +1,25 @@
 Apache http server documentation
 --------------------------------
 
+Basic Concept:
+----------------
+    It is web server working as front controller and its made using c language.
+    its having list of modules bydefault in setup packge some of preloaded or few are commented.
+    Module having list of directives which use as commond or tag element to configure web server as per customer requirement.
+
+In one line
+------------
+    Apache-Http-Server = Collection of Modules
+    Module = Collection of Directive
+    Directive = Command or tag element that use to configure server based on requirement
+
+
+you can check every module with their directive
+-------------------------------------------------
+https://httpd.apache.org/docs/2.4/mod/
+
+
+
 how to download and install(windows)
 -----------------------------------
     1-visit google.com and search apache http server
@@ -22,22 +41,6 @@ how to download and install(windows)
 
 
 
-How to listing dir or not listing directory
--------------------------------------------
-    <Directory /var/www/html/index_allow> 
-      Options Indexes
-    </Directory>
-
-    <Directory /var/www/html/index_deny> 
-    </Directory>
-
-
-
-    root path of deployable dir is -/var/www/html (in linux)
-    root path of deployable dir is - "${SRVROOT}/htdocs" (in windows)
-    Define SRVROOT "c:/Apache24"
-    root path of deployable dir is is "c:/Apache24/htdocs" (in windows)
-    
 
 Terms in Apache web servers
 -----------------------------------
@@ -48,7 +51,7 @@ important directive/commands
     1.1-DocumentRoot  -define deployable directory
     2-Define
     3-Listen
-    4-LoadModule  --load the module 
+    4-LoadModule  --load the module (it extends functionality interm of directive every module having their own directive) 
     5-Include     --include other conf file
     6-LogLevel    --set web server log-level
     7-ErrorLog    --defined log file
@@ -62,6 +65,9 @@ important directive/commands
     15-ServerAdmin admin@example.com   --to send mail by server incase of some issue
     16-ServerName www.example.com:80 (optional- not need to defined)
 
+
+
+
 important tags/elements
 
     1-<IfModule moduleName>
@@ -69,6 +75,8 @@ important tags/elements
     3-<Files ".ht*">
     4-<VirtualHost *:80>
          
+    configuration section link:
+     http://httpd.apache.org/docs/2.0/sections.html
 
 
 ServerRoot
@@ -105,3 +113,19 @@ Listen
     Listen 82 --means this server will be accessible by port 82
     Listen 12.34.56.78:80  -means this server will be accessible by port 82 with specific ip.
 
+How to listing dir or not listing directory
+-------------------------------------------
+    <Directory /var/www/html/index_allow> 
+      Options Indexes
+    </Directory>
+
+    <Directory /var/www/html/index_deny> 
+    </Directory>
+
+
+
+    root path of deployable dir is -/var/www/html (in linux)
+    root path of deployable dir is - "${SRVROOT}/htdocs" (in windows)
+    Define SRVROOT "c:/Apache24"
+    root path of deployable dir is is "c:/Apache24/htdocs" (in windows)
+    
