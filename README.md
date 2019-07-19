@@ -40,6 +40,15 @@ how to download and install(windows)
 
 
 
+How to Start/Stop Server
+------------------------
+    In Linux: (service name is httpd)
+      service httpd start/stop
+
+     In Windows: (service name is Apache2.4) you can use UI window to start/stop service manually
+     net start/stop Apache2.4
+
+
 
 
 Terms in Apache web servers
