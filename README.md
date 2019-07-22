@@ -244,4 +244,13 @@ RewriteRule , RewrireEngine and RewriteCond
     #RewriteRule "^(.*)$"  "/myproj/index2.html"
 
 
+Redirect in Apache server
+--------------------------
+    # Redirect also is similer to RewriteRule and also can write inside .htaccess file
+    #syntax: redirect [status-code] "pattern" "target"
+    Redirect 301 /gituser https://github.com/mohammad2java/apache-http-server-demo
+    #Syntax --RedirectMatch regular-express target-url
+    RedirectMatch 301 /perl/.* https://alvinalexander.com/web/apache-redirectmatch-examples-wildcard-301
+
+
 
