@@ -40,15 +40,6 @@ how to download and install(windows)
 
 
 
-How to Start/Stop Server
-------------------------
-    In Linux: (service name is httpd)
-      service httpd start/stop
-
-     In Windows: (service name is Apache2.4) you can use UI window to start/stop service manually
-     net start/stop Apache2.4
-
-
 
 
 Terms in Apache web servers
@@ -138,3 +129,72 @@ How to listing dir or not listing directory
     Define SRVROOT "c:/Apache24"
     root path of deployable dir is is "c:/Apache24/htdocs" (in windows)
     
+
+
+
+
+
+VirtualHost directive
+---------------------
+    This is very important to make multiple hostserver inside single web-server.
+    This is very good to hide application server using reverse proxy rule
+    
+setup:
+----------    
+    1) in windows default file for virtualhost setup is 
+    C:\Apache24\conf\extra\httpd-vhosts.conf
+
+    2) include vhost file in main conf file.(main conf file is httpd.conf)
+    Include conf/extra/httpd-vhosts.conf
+    
+    3)load follwing module
+    LoadModule proxy_module modules/mod_proxy.so
+    LoadModule proxy_http_module modules/mod_proxy_http.so
+
+
+VirtualHost using same webserver with seperate directory
+-----------------------------------------------------------
+    as you know htdocs is default root directtory for localhost with port:80
+
+    <VirtualHost dummy-host.example.com:80>
+        ServerAdmin webmaster@dummy-host.example.com
+        DocumentRoot "${SRVROOT}/htdocs/host1"
+        ServerName dummy-host.example.com
+        ErrorLog "logs/dummy-host.example.com-error.log"
+        CustomLog "logs/dummy-host2.example.com-access.log" common
+    </VirtualHost>
+
+    syntax : <VirtualHost vadrress:vport>
+    <VirtualHost *:*> * -accept for all(all ips and port) ,if not all you can put specific one like 
+    <VirtualHost *:80>  -accept all ip with port 80  
+    <VirtualHost dummy-host.example.com:80>  --accept only dummy-host.example.com address with port 80
+    
+flow step:
+--------
+    when client hit any address in address bar then browser local hosts file to find associated ip (if address entry is not present in hosts file then client looks dns provider and ask for server machine ip)
+    when get ip it will send request to that machine -machine server (apache-web-server) accept the request and match in conf file based on following orders.
+
+    1- match vaddress and port
+    2- match servername
+    3- if found more than one matches then first one will be final matches.
+    
+    
+
+VirtualHost using external app server (reverse proxy)
+-----------------------------------------------------
+    <VirtualHost shlocal:80>
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:8088/
+    ProxyPassReverse / http://localhost:8088/
+    ServerName shlocal
+    </VirtualHost>
+
+
+    ProxyPreserveHost On --means vaddress will be preserved instead of Actual address
+    ProxyPass  --vAddress will be act as proxy for actual address
+    ProxyPassReverse --vAddress will be act as proxy for actual address 
+    ServerName shlocal   --sencond matching for vaddress.
+
+
+
+
