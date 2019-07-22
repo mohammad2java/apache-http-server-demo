@@ -53,6 +53,8 @@ How to Start/Stop Server and compile the conf file
     for showing vhost configuration
     httpd -S
     
+    for restart appache server
+    httpd -k restart
 
 
 Terms in Apache web servers
@@ -208,6 +210,38 @@ VirtualHost using external app server (reverse proxy)
     ProxyPassReverse --vAddress will be act as proxy for actual address 
     ServerName shlocal   --sencond matching for vaddress.
 
+
+RewriteRule , RewrireEngine and RewriteCond
+---------------------------------------------
+    This is completly directory scope concept to match url pattern(RegularExpression to call something else url).
+    This can be use in 2 ways.
+    1) using .htaccess file  (inside the directory which you want to associate with RewriteEngine)
+    2) using httpd.conf file 
+
+    if you want to apply RewriteEngine as root level means (in htdocs directory)
+    open httpd.conf and written below code inside the htdocs dir.
+    
+    1)enable the Rewrite_module
+    LoadModule rewrite_module modules/mod_rewrite.so
+    
+    2) add following code inside htdocs dir
+    <Directory "${SRVROOT}/htdocs">
+        AllowOverride All
+        Require all granted
+        Options indexes FollowSymLinks SymLinksIfOwnerMatch 
+        RewriteEngine On                               
+        RewriteCond %{REQUEST_FILENAME} !-f       --means  if file exist dont apply RewriteRule
+        RewriteCond %{REQUEST_FILENAME} !-d        --means  if directory exist dont apply RewriteRule
+        RewriteRule "^(.*)$"  "/myproj/index2.html"    --syntax :  RewriteRule "url-pattern(regularexpress)"  "target-url"
+    </Directory>
+
+    if you want to use .htaccess file ..you can move Rewrite related code into .htaccess file and file must be inside htdocs(if you want to apply at root level) else in which you want to assciate)
+    
+    .htaccess---sample
+    #RewriteEngine On
+    #RewriteCond %{REQUEST_FILENAME} !-f
+    #RewriteCond %{REQUEST_FILENAME} !-d
+    #RewriteRule "^(.*)$"  "/myproj/index2.html"
 
 
 
