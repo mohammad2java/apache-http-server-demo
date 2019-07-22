@@ -39,7 +39,20 @@ how to download and install(windows)
     13-to verify hit localhost in web browser.
 
 
+How to Start/Stop Server and compile the conf file
+------------------------------------------------------
+    In Linux: (service name is httpd)
+      service httpd start/stop
 
+     In Windows: (service name is Apache2.4) you can use UI window to start/stop service manually
+     net start/stop Apache2.4
+
+    for compile
+    httpd -t
+    
+    for showing vhost configuration
+    httpd -S
+    
 
 
 Terms in Apache web servers
