@@ -1,4 +1,4 @@
-Apache http server documentation
+Apache http server docs
 --------------------------------
 
 Basic Concept:
