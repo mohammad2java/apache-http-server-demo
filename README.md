@@ -43,10 +43,11 @@ how to download and install(windows)
 How to Start/Stop Server and compile the conf file
 ------------------------------------------------------
     In Linux: (service name is httpd)
-      service httpd start/stop
+      service httpd start/stop/status   or systemctl start/stop/status httpd/http2
 
      In Windows: (service name is Apache2.4) you can use UI window to start/stop service manually
-     net start/stop Apache2.4
+     1) net start/stop Apache2.4
+     2) sc query Apache2.4   {for status of any services}
 
     for compile
     httpd -t
