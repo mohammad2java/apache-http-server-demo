@@ -177,6 +177,8 @@ VirtualHost using same webserver with seperate directory
         ServerAdmin webmaster@dummy-host.example.com
         DocumentRoot "${SRVROOT}/htdocs/host1"
         ServerName dummy-host.example.com
+        ServerAlias server1 servers2
+        ServerAlias *.example.com
         ErrorLog "logs/dummy-host.example.com-error.log"
         CustomLog "logs/dummy-host2.example.com-access.log" common
     </VirtualHost>
@@ -186,16 +188,15 @@ VirtualHost using same webserver with seperate directory
     <VirtualHost *:80>  -accept all ip with port 80  
     <VirtualHost dummy-host.example.com:80>  --accept only dummy-host.example.com address with port 80
     
-flow step:
+flow matching step:
 --------
     when client hit any address in address bar then browser local hosts file to find associated ip (if address entry is not present in hosts file then client looks dns provider and ask for server machine ip)
-    when get ip it will send request to that machine -machine server (apache-web-server) accept the request and match in conf file based on following orders.
-
-    1- match vaddress and port
-    2- match servername
-    3- if found more than one matches then first one will be final matches.
+ when get ip it will send request to that machine -machine server (apache-web-server) accept the request and match in conf file based on following orders.
+    1- match vaddress and port ( mandatory match)  --vaddress can be ip/host
+    2- match ServerName 
+    3- match ServerAlias
     
-    
+  Note: final called block will be maximum match block..if all block match only madatory one then first one will be called block. 
 
 VirtualHost using external app server (reverse proxy)
 -----------------------------------------------------
