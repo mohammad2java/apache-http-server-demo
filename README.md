@@ -257,8 +257,8 @@ Redirect in Apache server
     
     
     
-    ##SSL in APACHE2 ( deb distribution)
-    ------------------------------------------------
+ ##SSL in APACHE2 ( deb distribution)
+ ------------------------------------------------
 		
 		1) check openssl tool in lInux
 		which openssl or type openssl
