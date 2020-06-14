@@ -254,6 +254,38 @@ Redirect in Apache server
     Redirect 301 /gituser https://github.com/mohammad2java/apache-http-server-demo
     #Syntax --RedirectMatch regular-express target-url
     RedirectMatch 301 /perl/.* https://alvinalexander.com/web/apache-redirectmatch-examples-wildcard-301
+    
+    
+    
+    ##SSL in APACHE2 ( deb distribution)
+    ------------------------------------------------
+		
+		1) check openssl tool in lInux
+		which openssl or type openssl
+		if not present please install using 'apt install openssl' (mint)
+		2) create selfsign cert(for testing purpose) or CSR (for prod to sent CA for gettting cert).
+		2.1) command selfsign cert:
+		sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+		2.2) command for CSR request
+		openssl req -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr
+		Notes: for selfsign we have to provide selfsign mode (-x509) and validity(-days 365).
+		3) make sure command name can be your ip/hostname/start or wildcard hostname
+		 Example: Common Name (e.g. server FQDN or YOUR name) []:IP/hostname/starthostname
+		 4) enable headers and mod_ssl modules (a2en<mod|site|
+		 		sudo a2enmod ssl
+				sudo a2enmod headers
+		 5) enable default-ssl site along with default configuration (  _default_ means apache-server-ip-host)
+		 	sudo a2ensite default-ssl   --it will create default-ssl.conf will SSL configuration.
+		 	
+		 6) you can config following 3 directive with your host.
+		 SSLEngine on
+        SSLCertificateFile /etc/apache2/ssl/apache.crt
+        SSLCertificateKeyFile /etc/apache2/ssl/apache.key
+        
+        7) restart the apache2
+         systemctl restart apache2
+        
+		  
 
 
 
